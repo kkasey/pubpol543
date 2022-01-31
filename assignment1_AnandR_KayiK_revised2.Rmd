@@ -1,0 +1,202 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(rio)
+install_formats()
+data <-import("C:/Users/HI/Documents/GitHub/pubpol543/usa_00006.csv")
+```
+```{r}
+mydata = read.csv("usa_00006.csv")
+```
+
+```{r}
+names(mydata)
+str(mydata,width = 70,strict.width='cut')
+```
+```{r}
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="1", "AL")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="2", "AK")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="4", "AZ")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="5", "AR")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="6", "CA")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="8", "CO")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="9", "CT")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="10", "DE")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="11", "DC")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="12", "FL")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="13", "GA")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="15", "HI")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="16", "ID")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="17", "IL")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="18", "IN")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="19", "IA")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="20", "KS")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="21", "KY")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="22", "LA")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="23", "ME")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="24", "MD")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="25", "MA")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="26", "MI")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="27", "MN")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="28", "MS")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="29", "MO")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="30", "MT")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="31", "NE")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="32", "NV")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="33", "NH")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="34", "NJ")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="35", "NM")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="36", "NY")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="37", "NC")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="38", "ND")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="39", "OH")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="40", "OK")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="41", "OR")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="42", "PA")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="44", "RI")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="45", "SC")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="46", "SD")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="47", "TN")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="48", "TX")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="49", "UT")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="50", "VT")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="51", "VA")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="53", "WA")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="54", "WV")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="55", "WI")
+mydata$STATEFIP <- replace(mydata$STATEFIP, mydata$STATEFIP=="56", "WY")
+mydata
+
+```
+```{r}
+mydata <- mydata[!(mydata$HHINCOME==9999999),]
+mydata
+
+```
+```{r}
+table(mydata$STATEFIP)
+```
+
+
+```{r}
+StateCount_HI=aggregate(data=mydata,
+                        HHINCOME~STATEFIP,
+                        FUN=median)
+StateCount_HI
+```
+```{r}
+StateCount_HI=StateCount_HI[order(StateCount_HI$HHINCOME),]
+StateCount_HI
+```
+```{r}
+StateCount_HI$Percent=StateCount_HI$HHINCOME/sum(StateCount_HI$HHINCOME)
+StateCount_HI$PercentCum=cumsum(StateCount_HI$Percent)
+StateCount_HI$HHINCOME.Cum=cumsum(StateCount_HI$HHINCOME)
+# see some
+head(StateCount_HI,20)
+```
+```{r}
+library(ggplot2)
+base1=ggplot(data=StateCount_HI,
+             aes(x=STATEFIP,HHINCOME.Cum)) + theme_classic()
+base2=base1+scale_x_discrete()
+bar1=base2  +geom_bar(stat = "identity")
+bar2=bar1 + coord_flip() 
+bar2
+```
+
+```{r}
+base3=base2+scale_x_discrete(limits=StateCount_HI$STATEFIP)
+bar3=base3  +geom_bar(stat = "identity")
+bar4=bar3 + coord_flip() 
+bar4
+```
+```{r}
+bar4=base3  +geom_bar(stat = "identity",color='grey70',
+                      aes(fill=PercentCum<0.8),
+                      show.legend = F)
+bar4=bar4 + coord_flip()
+
+bar4
+```
+```{r}
+bar4=bar4 +scale_fill_manual(values=c(NA,"grey70"))
+bar4
+```
+```{r}
+States80=StateCount_HI[StateCount_HI$PercentCum<0.8,"STATEFIP"]
+
+# now we use that here, to alter the face of text:
+bar4=bar4 + theme(axis.text.y = element_text(face=ifelse(StateCount_HI$STATEFIP%in%States80,"bold","plain"),size=9))
+bar4
+```
+```{r}
+library(ggQC) 
+
+base4=ggplot(data=StateCount_HI,
+             aes(x=STATEFIP,y=HHINCOME)) + theme_classic()
+pare1=base4 + stat_pareto() 
+pare1
+```
+
+```{r}
+interX=length(States80)
+interY=max(StateCount_HI$HHINCOME.Cum)*0.8
+
+# annotating intercepts
+pare2=pare1 + geom_vline(xintercept = interX,
+                         linetype="dashed", color='blue') 
+pare2=pare2 + geom_hline(yintercept =interY,
+                         linetype="dashed", color='blue') 
+pare3=pare2 + theme(axis.text.x = element_text(angle = 90, hjust = 1), text=element_text(size=10))
+pare3
+```
+```{r}
+titleText='Median Income by State'
+sourceText='Source: American Community Survey'
+
+plot1 = pare3 + labs(title=titleText,
+                     x =NULL, 
+                     y = NULL,
+                     caption = sourceText)
+```
+
+```{r}
+library(scales)
+plot2 = plot1 + scale_y_continuous(breaks=c(0,100000,200000,500000,1000000,2000000),
+                                   limits = c(0,3000000))
+                                    
+plot2
+plot3 = plot2 + theme(plot.title = element_text(hjust = 0.5))
+                      
+plot3
+```
+
+```{r}
+rawdata <-read.csv ("C:/Users/HI/Desktop/class material/PUBPOL 543/CIP.csv")
+str(rawdata)
+library(ggplot2)
+plot1<-ggplot(rawdata,aes(x=Race,y=Data))
+plot1
+plot2=plot1+geom_bar(fill="gray",stat="identity")
+plot2
+titleText='children in poverty by race - 2019'
+sourceText='Source: American Community Survey'
+plot3=plot2+labs(title=titleText,x =NULL,y = NULL,caption = sourceText)
+plot3
+scale_y_continuous(labels = scales::percent_format(accuracy = 1))
+plot4=plot3+scale_y_continuous(labels = scales::percent_format(accuracy = 1))
+plot4
+
+```
+
+
