@@ -1,0 +1,83 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+data <-read.csv("C:/Users/HI/Documents/GitHub/pubpol543/2019.csv")
+str(data)
+```
+
+
+```{r}
+boxplot(data[,c('Score','GDP.per.capita','Social.support')])
+data$SCO_S=as.vector(scale(data$Score))
+data$GDP_S=as.vector(scale(data$GDP.per.capita))
+data$SOC_S=as.vector(scale(data$Social.support))
+```
+```{r}
+set.seed(123)
+library(cluster)
+vars=c('SCO_S','GDP_S','SOC_S')
+distMatrix=cluster::daisy(data[,vars])
+res.pam=cluster::pam(x=distMatrix,
+                     k = 3,
+                     cluster.only = F)
+```
+
+
+```{r}
+data$cluster=as.factor(res.pam$clustering)
+```
+
+
+
+```{r}
+theVars=c('SCO_S','GDP_S','SOC_S','cluster')
+aggregate(.~cluster,
+          data=data[,theVars],
+          FUN=median)
+```
+
+
+```{r}
+data$cluster=factor(data$cluster,
+                           levels=c(1,2,3),
+                           labels=c("high","mid","low"), 
+                           ordered=T)
+```
+
+```{r}
+library(sf)
+mapWorld <- read_sf("C:/Users/HI/Documents/GitHub/pubpol543/VAforPM_Spatial/worldMAp.geojson")
+head(mapWorld)
+mapWorldVars=merge(mapWorld, data, by='NAME')
+```
+
+```{r}
+library(ggplot2)
+base=ggplot(data=mapWorld) + geom_sf(fill='grey90',
+                                     color=NA) + theme_classic()
+base
+
+colMap = base + geom_sf(data=mapWorldVars,
+                       aes(fill=Score),
+                       color=NA)
+colMap
+```
+
+
+```{r}
+clusterMap= base + geom_sf(data=mapWorldVars,
+                           aes(fill=cluster),
+                           color=NA) 
+clusterMap 
+
+clusterMap+ scale_fill_brewer(palette ='YlOrRd')
+theLegTitle="World Happiness Score\n(grey is missing)"
+clusterMap+ scale_fill_brewer(palette ='YlOrRd',
+                              direction = -1, # color order
+                              name=theLegTitle)
+```
+
